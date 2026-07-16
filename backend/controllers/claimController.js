@@ -593,7 +593,7 @@ exports.cancelClaim = async (req, res) => {
       });
     }
 
-    await claim.remove();
+    await claim.deleteOne();
 
     res.json({
       success: true,
