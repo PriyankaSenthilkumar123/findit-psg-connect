@@ -1,5 +1,3 @@
-const fetch = require('node-fetch').default || require('node-fetch');
-
 // Model configuration - Simplified approach: skip image similarity if CLIP fails
 // For now, we'll primarily rely on text similarity
 const MODEL_NAME = 'Xenova/clip-vit-base-patch32';
