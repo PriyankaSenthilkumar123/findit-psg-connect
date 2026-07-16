@@ -1,4 +1,3 @@
-const { pipeline } = require('@xenova/transformers');
 const fetch = require('node-fetch').default || require('node-fetch');
 
 // Model configuration - Simplified approach: skip image similarity if CLIP fails
@@ -18,6 +17,8 @@ async function getImageModel() {
   imageModelPromise = (async () => {
     try {
       console.log('🤖 Loading image similarity model:', MODEL_NAME);
+      // Dynamic import for ES module
+      const { pipeline } = await import('@xenova/transformers');
       // CLIP models can be used with 'zero-shot-image-classification'
       const model = await pipeline('zero-shot-image-classification', MODEL_NAME);
       console.log('✅ Image similarity model loaded and cached successfully');

@@ -1,4 +1,3 @@
-const { pipeline } = require('@xenova/transformers');
 const { lexicalSynonymSimilarity } = require('./synonymService');
 
 // Model configuration
@@ -17,6 +16,8 @@ async function getTextModel() {
   textModelPromise = (async () => {
     try {
       console.log('🤖 Loading text similarity model:', MODEL_NAME);
+      // Dynamic import for ES module
+      const { pipeline } = await import('@xenova/transformers');
       const model = await pipeline('feature-extraction', MODEL_NAME);
       console.log('✅ Text similarity model loaded and cached successfully');
       return model;
