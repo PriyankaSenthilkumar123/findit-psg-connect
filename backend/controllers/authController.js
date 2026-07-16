@@ -14,6 +14,17 @@ exports.register = async (req, res) => {
   try {
     const { name, email, studentId, password } = req.body;
 
+    // Validate required fields before they are used. Without this, a missing field
+    // throws (e.g. "email.endsWith is not a function") and surfaces as a generic 500.
+    for (const [field, value] of Object.entries({ name, email, studentId, password })) {
+      if (typeof value !== 'string' || !value.trim()) {
+        return res.status(400).json({
+          success: false,
+          message: `${field} is required`
+        });
+      }
+    }
+
     // Check domain restriction for students
     if (!email.endsWith('@psgtech.ac.in')) {
       return res.status(400).json({ 
@@ -80,6 +91,17 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    // Validate required fields before they are used. Without this, a missing field
+    // throws (e.g. "email.endsWith is not a function") and surfaces as a generic 500.
+    for (const [field, value] of Object.entries({ email, password })) {
+      if (typeof value !== 'string' || !value.trim()) {
+        return res.status(400).json({
+          success: false,
+          message: `${field} is required`
+        });
+      }
+    }
 
     // Check domain restriction for students
     if (!email.endsWith('@psgtech.ac.in')) {
